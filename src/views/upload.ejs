@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Excel - Email Scheduler</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Excel</a>
+    <a href="/template">Edit Template</a>
+  </nav>
+
+  <main>
+    <h1>Upload Excel File</h1>
+    <p>Upload a <code>.xlsx</code> file with columns: <strong>company</strong>, <strong>email</strong>, <strong>role</strong>, <strong>schedule</strong>.</p>
+    <p>Schedule format: <code>Mon,Wed,Fri 09:00</code> (IST)</p>
+
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <input type="file" name="excel" accept=".xlsx" required>
+      <button type="submit" class="btn btn-ok">Upload</button>
+    </form>
+
+    <% if (uploaded) { %>
+      <div class="result">
+        <h3>Upload Result</h3>
+        <p>Created: <strong><%= uploaded.created %></strong> new jobs.</p>
+        <% if (uploaded.skipped > 0) { %>
+          <p>Skipped (duplicates): <strong><%= uploaded.skipped %></strong></p>
+        <% } %>
+      </div>
+    <% } %>
+
+    <% if (errors) { %>
+      <div class="errors">
+        <h3>Errors</h3>
+        <ul>
+          <% errors.forEach(function(err) { %>
+            <li>Row <%= err.row %>: <%= err.reason %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <% } %>
+  </main>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Scheduler Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Excel</a>
+    <a href="/template">Edit Template</a>
+  </nav>
+
+  <main>
+    <h1>Email Jobs</h1>
+
+    <% if (jobs.length === 0) { %>
+      <p>No jobs found. <a href="/upload">Upload an Excel file</a> to get started.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Role</th>
+            <th>Emails</th>
+            <th>Schedule</th>
+            <th>Sends</th>
+            <th>Status</th>
+            <th>Last Sent</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% jobs.forEach(function(job) { %>
+            <tr>
+              <td><%= job.company %></td>
+              <td><%= job.role %></td>
+              <td><%= job.emails.join(", ") %></td>
+              <td><%= job.days.join(", ") %> @ <%= job.time %> IST</td>
+              <td><%= job.sendCount %> / <%= job.maxSends %></td>
+              <td class="status-<%= job.status %>"><%= job.status %></td>
+              <td><%= job.lastSentDate || "—" %></td>
+              <td>
+                <% if (job.status === "active") { %>
+                  <form method="POST" action="/pause/<%= job.id %>" style="display:inline">
+                    <button type="submit" class="btn btn-warn">Pause</button>
+                  </form>
+                <% } else if (job.status === "paused") { %>
+                  <form method="POST" action="/resume/<%= job.id %>" style="display:inline">
+                    <button type="submit" class="btn btn-ok">Resume</button>
+                  </form>
+                <% } %>
+                <form method="POST" action="/delete/<%= job.id %>" style="display:inline" onsubmit="return confirm('Delete this job?')">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </main>
+</body>
+</html>

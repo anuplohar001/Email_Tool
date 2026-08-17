@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model EmailJob {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  company      String
+  emails       String[]
+  role         String
+
+  days         String[]
+  time         String
+  timezone     String   @default("Asia/Kolkata")
+
+  maxSends     Int      @default(3)
+  sendCount    Int      @default(0)
+  lastSentDate String?
+
+  status       String   @default("active")
+  lastError    String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

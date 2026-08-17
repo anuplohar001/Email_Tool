@@ -1,0 +1,31 @@
+const nodemailer = require("nodemailer");
+
+let transporter = null;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD,
+      },
+    });
+  }
+  return transporter;
+}
+
+async function sendEmail(to, subject, htmlBody) {
+  const mailer = getTransporter();
+  console.log(`[Mailer] Sending email to: ${Array.isArray(to) ? to.join(", ") : to} | subject: ${subject}`);
+  const info = await mailer.sendMail({
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    html: htmlBody,
+  });
+  console.log(`[Mailer] Sent successfully. MessageId: ${info.messageId}`);
+  return info;
+}
+
+module.exports = { sendEmail };
