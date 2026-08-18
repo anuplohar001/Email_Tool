@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-
 let transporter = null;
 
 function getTransporter() {
@@ -18,6 +17,7 @@ function getTransporter() {
 async function sendEmail(to, subject, htmlBody) {
   const mailer = getTransporter();
   console.log(`[Mailer] Sending email to: ${Array.isArray(to) ? to.join(", ") : to} | subject: ${subject}`);
+  await mailer.verify();
   const info = await mailer.sendMail({
     from: `"Anup Lohar" <${process.env.EMAIL_USER}>`,
     to,

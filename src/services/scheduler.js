@@ -72,7 +72,7 @@ async function tick() {
       );
     } catch (err) {
       console.error(
-        `[Scheduler] Failed for ${job.company}: ${err.message}`
+        `[Scheduler] Error = for ${err}: ${err.message}`
       );
       try {
         await prisma.emailJob.update({
