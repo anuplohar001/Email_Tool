@@ -19,10 +19,17 @@ async function sendEmail(to, subject, htmlBody) {
   const mailer = getTransporter();
   console.log(`[Mailer] Sending email to: ${Array.isArray(to) ? to.join(", ") : to} | subject: ${subject}`);
   const info = await mailer.sendMail({
-    from: process.env.EMAIL_USER,
+    from: `"Anup Lohar" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html: htmlBody,
+    attachments: [
+      {
+        filename: "Anup_Lohar.pdf",
+        path: "./Anup_Lohar.pdf",
+        contentType: "application/pdf",
+      },
+    ],
   });
   console.log(`[Mailer] Sent successfully. MessageId: ${info.messageId}`);
   return info;
