@@ -27,6 +27,44 @@ router.post("/resume/:id", async (req, res) => {
   res.redirect("/");
 });
 
+router.post("/create", async (req, res) => {
+  const { company, role, emails, time } = req.body;
+  const days = req.body.days ? (Array.isArray(req.body.days) ? req.body.days : [req.body.days]) : [];
+
+  if (!company || !role || !emails || !time || days.length === 0) {
+    return res.redirect("/");
+  }
+
+  const emailList = emails
+    .split(",")
+    .map((e) => e.trim())
+    .filter((e) => e.length > 0 && e.includes("@"));
+
+  if (emailList.length === 0) {
+    return res.redirect("/");
+  }
+
+  const existing = await prisma.emailJob.findFirst({
+    where: { company, role, time, days: { hasEvery: days } },
+  });
+
+  if (existing) {
+    return res.redirect("/");
+  }
+
+  await prisma.emailJob.create({
+    data: {
+      company,
+      role,
+      emails: emailList,
+      days,
+      time,
+    },
+  });
+
+  res.redirect("/");
+});
+
 router.post("/delete/:id", async (req, res) => {
   await prisma.emailJob.delete({ where: { id: req.params.id } });
   res.redirect("/");

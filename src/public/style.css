@@ -65,6 +65,7 @@ th {
   cursor: pointer;
   font-size: 15px;
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 
 .btn-ok { background: #4caf50; color: #fff; }
@@ -105,4 +106,54 @@ code {
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 16px;
+}
+
+.create-form {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.create-form h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.form-group input[type="text"],
+.form-group input[type="time"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.days-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.day-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.day-checkbox input {
+  cursor: pointer;
 }

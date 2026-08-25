@@ -20,9 +20,6 @@ async function tick() {
       where: { status: "active" },
     });
     console.log(`[Scheduler] Active jobs in DB: ${allJobs.length}`);
-    for (const j of allJobs) {
-      console.log(`[Scheduler]   - ${j.company} | days: [${j.days}] | time: ${j.time} | lastSent: ${j.lastSentDate} | sends: ${j.sendCount}/${j.maxSends}`);
-    }
   } catch (err) {
     console.error("[Scheduler] DB query error:", err.message);
     return;
