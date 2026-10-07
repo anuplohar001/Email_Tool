@@ -3,20 +3,24 @@ const { loadTemplate, saveTemplate } = require("../services/templateLoader");
 
 const router = express.Router();
 
+function getTemplates() {
+  return {
+    initial: loadTemplate("initial"),
+    followup: loadTemplate("followup"),
+  };
+}
+
 router.get("/", (req, res) => {
-  const { subject, body } = loadTemplate();
-  res.render("template", { subject, body, saved: false });
+  res.render("template", { templates: getTemplates(), saved: false });
 });
 
 router.post("/", (req, res) => {
-  const { subject, body } = req.body;
-  saveTemplate(subject || "", body || "");
-  const updated = loadTemplate();
-  res.render("template", {
-    subject: updated.subject,
-    body: updated.body,
-    saved: true,
-  });
+  const { initialSubject, initialBody, followupSubject, followupBody } = req.body;
+
+  saveTemplate("initial", initialSubject || "", initialBody || "");
+  saveTemplate("followup", followupSubject || "", followupBody || "");
+
+  res.render("template", { templates: getTemplates(), saved: true });
 });
 
 module.exports = router;

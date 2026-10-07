@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const { RESUME_PATH, RESUME_FILENAME } = require("./resume");
 let transporter = null;
 
 function getTransporter() {
@@ -31,8 +32,8 @@ async function sendEmail(to, subject, htmlBody) {
     html: htmlBody,
     attachments: [
       {
-        filename: "Anup_Lohar.pdf",
-        path: "./Anup_Lohar.pdf",
+        filename: RESUME_FILENAME,
+        path: RESUME_PATH,
         contentType: "application/pdf",
       },
     ],

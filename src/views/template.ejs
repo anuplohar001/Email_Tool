@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Template - Email Scheduler</title>
+  <title>Edit Templates - Email Scheduler</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -11,27 +11,41 @@
     <a href="/">Dashboard</a>
     <a href="/upload">Upload Excel</a>
     <a href="/template">Edit Template</a>
+    <a href="/resume">Resume</a>
   </nav>
 
   <main>
-    <h1>Edit Email Template</h1>
+    <h1>Edit Email Templates</h1>
     <p>Use <code>{{company}}</code> and <code>{{role}}</code> as placeholders.</p>
 
     <% if (saved) { %>
       <div class="result">
-        <p>Template saved successfully.</p>
+        <p>Templates saved successfully.</p>
       </div>
     <% } %>
 
     <form method="POST" action="/template">
-      <label>Subject</label>
-      <input type="text" name="subject" value="<%= subject %>" style="width:100%;padding:8px;margin-bottom:12px">
+      <div class="create-form">
+        <h2>Initial Template — 1st send</h2>
+        <p>This template is used for the first email of each job.</p>
+        <label>Subject</label>
+        <input type="text" name="initialSubject" value="<%= templates.initial.subject %>" style="width:100%;padding:8px;margin-bottom:12px">
 
-      <label>Body (HTML)</label>
-      <textarea name="body" rows="12" style="width:100%;padding:8px"><%= body %></textarea>
+        <label>Body (HTML)</label>
+        <textarea name="initialBody" rows="12" style="width:100%;padding:8px"><%= templates.initial.body %></textarea>
+      </div>
 
-      <br><br>
-      <button type="submit" class="btn btn-ok">Save Template</button>
+      <div class="create-form">
+        <h2>Follow-up Template — 2nd &amp; 3rd send</h2>
+        <p>This template is used automatically for all sends after the first one.</p>
+        <label>Subject</label>
+        <input type="text" name="followupSubject" value="<%= templates.followup.subject %>" style="width:100%;padding:8px;margin-bottom:12px">
+
+        <label>Body (HTML)</label>
+        <textarea name="followupBody" rows="12" style="width:100%;padding:8px"><%= templates.followup.body %></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-ok">Save Templates</button>
     </form>
   </main>
 </body>

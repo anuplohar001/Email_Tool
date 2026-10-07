@@ -71,6 +71,14 @@ th {
 .btn-ok { background: #4caf50; color: #fff; }
 .btn-warn { background: #ff9800; color: #fff; }
 .btn-danger { background: #f44336; color: #fff; }
+.btn-info { background: #2196f3; color: #fff; }
+.btn-cancel { background: #9e9e9e; color: #fff; }
+
+a.btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+}
 
 .status-active { color: #4caf50; font-weight: 600; }
 .status-completed { color: #9e9e9e; }
@@ -132,12 +140,14 @@ code {
 }
 
 .form-group input[type="text"],
-.form-group input[type="time"] {
+.form-group input[type="time"],
+.form-group select {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
+  background: #fff;
 }
 
 .days-group {

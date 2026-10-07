@@ -12,5 +12,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", require("./routes/jobs"));
 app.use("/upload", require("./routes/upload"));
 app.use("/template", require("./routes/template"));
+app.use("/resume", require("./routes/resume"));
 
 module.exports = app;

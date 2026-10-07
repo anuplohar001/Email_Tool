@@ -11,6 +11,7 @@
     <a href="/">Dashboard</a>
     <a href="/upload">Upload Excel</a>
     <a href="/template">Edit Template</a>
+    <a href="/resume">Resume</a>
   </nav>
 
   <main>
@@ -84,6 +85,7 @@
               <td class="status-<%= job.status %>"><%= job.status %></td>
               <td><%= job.lastSentDate || "—" %></td>
               <td>
+                <a href="/edit/<%= job.id %>" class="btn btn-info">Edit</a>
                 <% if (job.status === "active") { %>
                   <form method="POST" action="/pause/<%= job.id %>" style="display:inline">
                     <button type="submit" class="btn btn-warn">Pause</button>

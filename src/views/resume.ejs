@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Email Scheduler</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Excel</a>
+    <a href="/template">Edit Template</a>
+    <a href="/resume">Resume</a>
+  </nav>
+
+  <main>
+    <h1>Resume</h1>
+    <p>This PDF is attached to every scheduled email.</p>
+
+    <% if (saved) { %>
+      <div class="result">
+        <p>Resume updated successfully. Future emails will use the new PDF.</p>
+      </div>
+    <% } %>
+
+    <% if (error) { %>
+      <div class="errors">
+        <p><%= error %></p>
+      </div>
+    <% } %>
+
+    <div class="create-form">
+      <h2>Current Resume</h2>
+      <% if (info.exists) { %>
+        <p>
+          File: <strong><%= info.filename %></strong> —
+          <%= info.size %> — updated <%= info.updatedAt %>
+        </p>
+        <p><a href="/resume/file" target="_blank">Open in new tab</a></p>
+        <iframe src="/resume/file" title="Current resume" style="width:100%;height:600px;border:1px solid #ddd;border-radius:4px;background:#fff;margin-top:8px"></iframe>
+      <% } else { %>
+        <p>No resume found. Upload a PDF below.</p>
+      <% } %>
+    </div>
+
+    <div class="create-form">
+      <h2>Change Resume</h2>
+      <form method="POST" action="/resume" enctype="multipart/form-data">
+        <input type="file" name="resume" accept="application/pdf,.pdf" required>
+        <button type="submit" class="btn btn-ok">Upload New Resume</button>
+      </form>
+      <p style="margin-top:12px">The uploaded PDF replaces the current resume. Only PDF files up to 10 MB are accepted.</p>
+    </div>
+  </main>
+</body>
+</html>

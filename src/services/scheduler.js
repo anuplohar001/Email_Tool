@@ -36,10 +36,11 @@ async function tick() {
 
   if (jobs.length === 0) return;
 
-  const template = loadTemplate();
- 
   for (const job of jobs) {
     try {
+      const templateType = job.sendCount === 0 ? "initial" : "followup";
+      const template = loadTemplate(templateType);
+
       const subject = renderTemplate(template.subject, {
         company: job.company,
         role: job.role,
@@ -65,7 +66,7 @@ async function tick() {
       });
 
       console.log(
-        `[Scheduler] Sent to ${job.company} (${job.emails.join(",")}) - count ${newSendCount}/${job.maxSends}`
+        `[Scheduler] Sent to ${job.company} (${job.emails.join(",")}) - count ${newSendCount}/${job.maxSends} - template: ${templateType}`
       );
     } catch (err) {
       console.error(
